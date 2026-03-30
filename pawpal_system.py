@@ -69,7 +69,8 @@ class Scheduler:
     def __init__(self, owner: Owner, pet: Pet) -> None:
         self.owner = owner
         self.pet = pet
-        self.available_tasks: list[Task] = []
+        self.available_tasks: list[Task] = pet.get_tasks()
+        self.scheduled_tasks: list[Task] = []
 
     def generate_schedule(self) -> list[Task]:
         pass
@@ -77,7 +78,7 @@ class Scheduler:
     def filter_by_time(self, minutes: int) -> list[Task]:
         pass
 
-    def sort_by_priority(self) -> list[Task]:
+    def sort_by_priority(self, tasks: list[Task]) -> list[Task]:
         pass
 
     def explain_schedule(self) -> str:

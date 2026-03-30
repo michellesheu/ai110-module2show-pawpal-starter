@@ -14,7 +14,10 @@ add a pet, schedule a walk, see today's tasks)
 **b. Design changes**
 
 - Did your design change during implementation?
+  Yes, the design changed during implementation.
+
 - If yes, describe at least one change and why you made it.
+  The original UML showed the Scheduler with a separate `available_tasks` list, but during implementation I realized the Scheduler should pull tasks directly from the Pet object it already holds rather than maintaining a disconnected list. I also added a `scheduled_tasks` attribute to store the result of `generate_schedule()`, because without it `explain_schedule()` had no way to access the final schedule it needed to describe. These changes were necessary because the original design had no clear data flow from Pet → Scheduler → explanation output.
 
 ---
 
