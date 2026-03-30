@@ -26,12 +26,18 @@ add a pet, schedule a walk, see today's tasks)
 **a. Constraints and priorities**
 
 - What constraints does your scheduler consider (for example: time, priority, preferences)?
+  The scheduler considers: (1) **time constraints**: tasks must fit within the owner's available_minutes; (2) **priority levels** (high/medium/low): tasks are sorted by priority before greedily packing; (3) **completion status**: already-completed tasks are excluded; (4) **day-of-week filters**: weekly tasks with a scheduled_day are excluded if it's not their day; (5) **category consistency**: the conflict detector warns about back-to-back tasks in the same category (e.g., two exercise tasks with no rest). (6) **due dates**: recurring tasks track when they are due, though the scheduler doesn't yet filter by due date.
+
 - How did you decide which constraints mattered most?
+  Time and priority are fundamental: the owner has 60 minutes and some tasks are more important than others, so those constraints are core to the algorithm. Day-of-week filtering handles the weekly task pattern (e.g., grooming on Monday only). Category-based rest breaks are a quality-of-life warning, not a hard constraint, because some owners might stack exercise tasks intentionally. Due dates matter for *tracking* next occurrences, but the scheduler doesn't yet gate tasks based on due date (e.g., excluding today's tasks tomorrow).
 
 **b. Tradeoffs**
 
 - Describe one tradeoff your scheduler makes.
+  **Independent per-pet scheduling**: Each pet's schedule is generated independently, with time starting at minute 0 for each pet. The scheduler does not coordinate across multiple pets or enforce a global time budget. For example, if Biscuit (the dog) needs 55 minutes and Mochi (the cat) needs 40 minutes, the scheduler will produce both schedules as "fit within 60 minutes available," even though Michelle cannot be in two places at once and would actually need 95 minutes total. The `detect_owner_level_overlaps()` method detects these conflicts *after* the fact, but does not prevent them during scheduling.
+
 - Why is that tradeoff reasonable for this scenario?
+  This tradeoff prioritizes **simplicity and modularity** over global optimization. Generating one schedule per pet is O(n log n) sorting + O(n) greedy packing, and it scales linearly with the number of pets. A globally optimal solver that considers all pets together would be NP-hard (bin packing + scheduling). For a pet care app, independent scheduling is a pragmatic choice: it's fast, easy to understand, and the post-hoc overlap detection gives the owner visibility into the conflicts so they can manually adjust (e.g., hiring a dog walker, batching pet care into blocks). The tradeoff is: lose some optimality, but gain clarity and maintainability.
 
 ---
 
