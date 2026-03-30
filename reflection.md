@@ -29,12 +29,12 @@ add a pet, schedule a walk, see today's tasks)
   The scheduler considers: (1) **time constraints**: tasks must fit within the owner's available_minutes; (2) **priority levels** (high/medium/low): tasks are sorted by priority before greedily packing; (3) **completion status**: already-completed tasks are excluded; (4) **day-of-week filters**: weekly tasks with a scheduled_day are excluded if it's not their day; (5) **category consistency**: the conflict detector warns about back-to-back tasks in the same category (e.g., two exercise tasks with no rest). (6) **due dates**: recurring tasks track when they are due, though the scheduler doesn't yet filter by due date.
 
 - How did you decide which constraints mattered most?
-  Time and priority are fundamental: the owner has 60 minutes and some tasks are more important than others, so those constraints are core to the algorithm. Day-of-week filtering handles the weekly task pattern (e.g., grooming on Monday only). Category-based rest breaks are a quality-of-life warning, not a hard constraint, because some owners might stack exercise tasks intentionally. Due dates matter for *tracking* next occurrences, but the scheduler doesn't yet gate tasks based on due date (e.g., excluding today's tasks tomorrow).
+  Time and priority are fundamental: the owner has 60 minutes and some tasks are more important than others, so those constraints are core to the algorithm. Day-of-week filtering handles the weekly task pattern (e.g., grooming on Monday only). Category-based rest breaks are a quality-of-life warning, not a hard constraint, because some owners might stack exercise tasks intentionally. Due dates matter for _tracking_ next occurrences, but the scheduler doesn't yet gate tasks based on due date (e.g., excluding today's tasks tomorrow).
 
 **b. Tradeoffs**
 
 - Describe one tradeoff your scheduler makes.
-  **Independent per-pet scheduling**: Each pet's schedule is generated independently, with time starting at minute 0 for each pet. The scheduler does not coordinate across multiple pets or enforce a global time budget. For example, if Biscuit (the dog) needs 55 minutes and Mochi (the cat) needs 40 minutes, the scheduler will produce both schedules as "fit within 60 minutes available," even though Michelle cannot be in two places at once and would actually need 95 minutes total. The `detect_owner_level_overlaps()` method detects these conflicts *after* the fact, but does not prevent them during scheduling.
+  **Independent per-pet scheduling**: Each pet's schedule is generated independently, with time starting at minute 0 for each pet. The scheduler does not coordinate across multiple pets or enforce a global time budget. For example, if Biscuit (the dog) needs 55 minutes and Mochi (the cat) needs 40 minutes, the scheduler will produce both schedules as "fit within 60 minutes available," even though Michelle cannot be in two places at once and would actually need 95 minutes total. The `detect_owner_level_overlaps()` method detects these conflicts _after_ the fact, but does not prevent them during scheduling.
 
 - Why is that tradeoff reasonable for this scenario?
   This tradeoff prioritizes **simplicity and modularity** over global optimization. Generating one schedule per pet is O(n log n) sorting + O(n) greedy packing, and it scales linearly with the number of pets. A globally optimal solver that considers all pets together would be NP-hard (bin packing + scheduling). For a pet care app, independent scheduling is a pragmatic choice: it's fast, easy to understand, and the post-hoc overlap detection gives the owner visibility into the conflicts so they can manually adjust (e.g., hiring a dog walker, batching pet care into blocks). The tradeoff is: lose some optimality, but gain clarity and maintainability.
@@ -46,12 +46,15 @@ add a pet, schedule a walk, see today's tasks)
 **a. How you used AI**
 
 - How did you use AI tools during this project (for example: design brainstorming, debugging, refactoring)?
+  I used Claude during this project for design brainstorming, implementing code, verifying test cases, and debugging.
 - What kinds of prompts or questions were most helpful?
-
-**b. Judgment and verification**
+  The more specific context prompts were most helpful.
+  **b. Judgment and verification**
 
 - Describe one moment where you did not accept an AI suggestion as-is.
+  I did not accept an AI suggestion when it created test cases in a test_pawpal.py in the root directory instead of tests/test_pawpal.py.
 - How did you evaluate or verify what the AI suggested?
+  I ran the pytests on my terminal when it told me that the tests passed to make sure that they really worked.
 
 ---
 
@@ -60,12 +63,15 @@ add a pet, schedule a walk, see today's tasks)
 **a. What you tested**
 
 - What behaviors did you test?
+  I tested task filtering, task completion and status tracking, pet management, and conflict detection.
 - Why were these tests important?
-
-**b. Confidence**
+  These tests were important to make sure that tasks were sorted based on priority, pets were being added properly, and that the schedule was working properly.
+  **b. Confidence**
 
 - How confident are you that your scheduler works correctly?
+  I'm 90% confident that the scheduler works correctly.
 - What edge cases would you test next if you had more time?
+  If I had more time I would test very large schedules and empty inputs.
 
 ---
 
@@ -74,11 +80,12 @@ add a pet, schedule a walk, see today's tasks)
 **a. What went well**
 
 - What part of this project are you most satisfied with?
-
-**b. What you would improve**
+  I am most satisfied that the main functionality of the app workslike adding tasks and generating the schedule.
+  **b. What you would improve**
 
 - If you had another iteration, what would you improve or redesign?
-
-**c. Key takeaway**
+  I would improve verification of input fields. Currently you can add an animal with a blank name so that should be fixed. I would also like to test the scheduler more thoroughly like making a large schedule to test it.
+  **c. Key takeaway**
 
 - What is one important thing you learned about designing systems or working with AI on this project?
+  I learned that AI is a powerful collaborator but you still need to know what you're doing to guide it well.

@@ -3,7 +3,8 @@
     "allow": [
       "Bash(source .venv/bin/activate)",
       "Bash(python main.py)",
-      "Bash(pytest tests/test_pawpal.py -v)"
+      "Bash(pytest tests/test_pawpal.py -v)",
+      "Bash(find /Users/michellesheu/Desktop/classes/AI110/ai110-module2show-pawpal-starter -name *.uml -o -name *uml* -o -name *diagram*)"
     ]
   }
 }
