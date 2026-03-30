@@ -75,3 +75,76 @@ This implementation includes several advanced scheduling features:
 - Generates human-readable schedule with time windows, priorities, and explanations
 
 See `main.py` for a full demonstration of all features, and `tests/test_pawpal.py` for test coverage (39 tests).
+
+## Testing PawPal+
+
+### Running Tests
+
+```bash
+# Run all tests
+python -m pytest tests/test_pawpal.py -v
+
+# Run a specific test
+python -m pytest tests/test_pawpal.py::test_complete_daily_task_creates_next_occurrence -v
+```
+
+### Test Coverage
+
+The test suite includes **39 passing tests** covering:
+
+#### Core Functionality (6 tests)
+- Task completion and status tracking
+- Pet task management
+- Priority-based task sorting (with shortest-first tiebreaker)
+
+#### Task Filtering (7 tests)
+- Filtering by completion status (incomplete/completed)
+- Filtering by pet name (case-insensitive)
+- Filtering by day-of-week (weekly tasks on correct/wrong days)
+- Filtering by category
+- Excluding completed tasks from schedules
+
+#### Scheduling & Time Management (6 tests)
+- Sequential start time assignment
+- Time budget enforcement (no overscheduling)
+- Task sorting by duration (ascending/descending)
+- Conflict detection (back-to-back tasks in same category)
+
+#### Recurring Tasks (5 tests)
+- Auto-creation of next occurrences for daily/weekly tasks
+- Due date advancement (timedelta)
+- No spawning for "as needed" tasks
+- Independent copies (mutations don't affect originals)
+- Reset behavior for recurring tasks
+
+#### Multi-Pet Support (4 tests)
+- Pet persistence in owner's pet list
+- Multiple pets in same owner
+- Same object reference (mutations visible through owner)
+- Task persistence before/after adding to owner
+
+#### Conflict Detection (5 tests)
+- Time range overlap detection (edge cases: true/false)
+- Same-pet overlaps in schedule
+- Owner-level overlaps across multiple pets
+
+### Confidence Level
+
+⭐⭐⭐⭐ (4/5 stars)
+
+**Why 4 stars:**
+- ✅ All 39 tests pass consistently
+- ✅ Core scheduling logic is well-tested (filtering, sorting, greedy packing)
+- ✅ Recurring task management and due dates are verified
+- ✅ Conflict detection across single and multiple pets works
+- ⚠️ **Minor gaps**:
+  - No test for Streamlit UI integration (tested manually via `streamlit run app.py`)
+  - No edge cases for extreme values (0 minutes available, 100+ tasks)
+  - Due date filtering in scheduler is not yet implemented (only tracked, not enforced)
+  - No randomized/fuzz testing
+
+**What would increase confidence to 5 stars:**
+- Integration tests for the Streamlit UI
+- Edge case testing (empty inputs, very large schedules)
+- Implementing due-date-based filtering in the scheduler
+- Property-based testing with Hypothesis
