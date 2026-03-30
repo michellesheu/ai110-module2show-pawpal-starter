@@ -16,21 +16,27 @@ class Task:
     completed: bool = False
 
     def get_title(self) -> str:
+        """Return the task title."""
         return self.title
 
     def get_duration(self) -> int:
+        """Return the task duration in minutes."""
         return self.duration_minutes
 
     def get_priority(self) -> str:
+        """Return the task priority level."""
         return self.priority
 
     def get_category(self) -> str:
+        """Return the task category."""
         return self.category
 
     def mark_complete(self) -> None:
+        """Mark this task as completed."""
         self.completed = True
 
     def is_complete(self) -> bool:
+        """Return True if the task has been completed."""
         return self.completed
 
 
@@ -42,18 +48,23 @@ class Pet:
     tasks: list[Task] = field(default_factory=list)
 
     def get_name(self) -> str:
+        """Return the pet's name."""
         return self.name
 
     def get_species(self) -> str:
+        """Return the pet's species."""
         return self.species
 
     def get_age(self) -> int:
+        """Return the pet's age in years."""
         return self.age
 
     def add_task(self, task: Task) -> None:
+        """Add a care task to this pet's task list."""
         self.tasks.append(task)
 
     def get_tasks(self) -> list[Task]:
+        """Return a copy of this pet's task list."""
         return list(self.tasks)
 
 
@@ -64,19 +75,23 @@ class Owner:
     pets: list[Pet] = field(default_factory=list)
 
     def get_name(self) -> str:
+        """Return the owner's name."""
         return self.name
 
     def get_available_minutes(self) -> int:
+        """Return the number of minutes the owner has available today."""
         return self.available_minutes
 
     def add_pet(self, pet: Pet) -> None:
+        """Add a pet to this owner's pet list."""
         self.pets.append(pet)
 
     def get_pets(self) -> list[Pet]:
+        """Return a copy of this owner's pet list."""
         return list(self.pets)
 
     def get_all_tasks(self) -> list[Task]:
-        """Return every task across all owned pets."""
+        """Return a flat list of every task across all owned pets."""
         all_tasks = []
         for pet in self.pets:
             all_tasks.extend(pet.get_tasks())
