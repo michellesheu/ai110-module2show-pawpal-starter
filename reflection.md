@@ -6,10 +6,10 @@
 add a pet, schedule a walk, see today's tasks)
 
 - Briefly describe your initial UML design.
-  My initial UML design consists of three classes: Pet, Task, and Owner. The Pet class stores the pet's attributes and belongs to an Owner. The Task class represents individual care activities such as walking, feeding, medications, and enrichment. The Owner class holds the owner's schedule and constraints, such as how much time is available each day.
+  My initial UML design consists of four classes: Pet, Task, Owner, and Scheduler. The Pet class stores the pet's attributes and belongs to an Owner. The Task class represents pet care activities such as walking, feeding, medications, and enrichment. The Owner class holds the owner's schedule and constraints, such as how much time is available each day. The Scheduler class will generate a plan based on the owner's and their pet's information.
 
 - What classes did you include, and what responsibilities did you assign to each?
-  The design includes three classes. The Owner class is responsible for storing the owner's name and daily time constraints, representing the limits within which the schedule must fit. The Pet class is responsible for storing the pet's name, species, and age, and is associated with its Owner. The Task class is responsible for representing a single care activity, holding attributes like title, duration in minutes, priority, and category so the scheduler can select and order tasks appropriately.
+  The design includes four classes. The Owner class is responsible for storing the owner's name and daily time constraints, representing the limits within which the schedule must fit. The Pet class is responsible for storing the pet's name, species, and age, and is associated with its Owner. The Task class is responsible for representing a single care activity, holding attributes like title, duration in minutes, priority, and category so the scheduler can select and order tasks appropriately. The Scheduler class is responsible for generating a schedule which takes the Owner and Pet as input.
 
 **b. Design changes**
 
