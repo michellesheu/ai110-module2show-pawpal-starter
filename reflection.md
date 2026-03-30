@@ -3,9 +3,13 @@
 ## 1. System Design
 
 **a. Initial design**
+add a pet, schedule a walk, see today's tasks)
 
 - Briefly describe your initial UML design.
+  My initial UML design consists of three classes: Pet, Task, and Owner. The Pet class stores the pet's attributes and belongs to an Owner. The Task class represents individual care activities such as walking, feeding, medications, and enrichment. The Owner class holds the owner's schedule and constraints, such as how much time is available each day.
+
 - What classes did you include, and what responsibilities did you assign to each?
+  The design includes three classes. The Owner class is responsible for storing the owner's name and daily time constraints, representing the limits within which the schedule must fit. The Pet class is responsible for storing the pet's name, species, and age, and is associated with its Owner. The Task class is responsible for representing a single care activity, holding attributes like title, duration in minutes, priority, and category so the scheduler can select and order tasks appropriately.
 
 **b. Design changes**
 
